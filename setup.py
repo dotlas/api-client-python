@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="dotlas",
-    version="1.0",
+    version="1.0.1",
     description="Dotlas Python Package",
     author="Dotlas Inc.",
     author_email="tech@dotlas.com",

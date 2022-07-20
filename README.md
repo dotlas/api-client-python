@@ -40,7 +40,7 @@ $ pip install dotlas
 ### Local
 To setup dotlas from GitHub:
 
-<p align="center"><img src="assets/local_install.png" height=150></img></p>
+<p align="center"><img src="https://raw.githubusercontent.com/dotlas/api-client-python/main/assets/local_install.png" height=150></img></p>
 
 ## Usage
 
@@ -96,4 +96,4 @@ folium.GeoJson(
 ).add_to(folMap)
 ```
 
-<p align="center"><img src="assets/folium_mapbox_map.png" height=200></img></p>
+<p align="center"><img src="https://raw.githubusercontent.com/dotlas/api-client-python/main/assets/folium_mapbox_map.png" height=200></img></p>
