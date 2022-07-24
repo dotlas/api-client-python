@@ -1,6 +1,5 @@
 from multiprocessing.sharedctypes import Value
 from pydantic import BaseModel, ValidationError, validator
-from typing import List, Union
 
 coordinate_valid = (
     lambda latitude, longitude: True
@@ -37,7 +36,7 @@ class GeojsonSpec(BaseModel):
         geometry: GeometryModel
 
     type: str = "FeatureCollection"
-    features: List[GeometryFeature]
+    features: list[GeometryFeature]
 
 
 class GeneralStatisitcal(BaseModel):
@@ -130,7 +129,7 @@ class SalesTerritoryRequest(BaseModel):
 
 class SalesTerritoryResponse(BaseModel):
     sociodemographic: SocioDemographicResponse = None
-    areas_covered: List[str] = None
+    areas_covered: list[str] = None
     geometry: GeojsonSpec = None
 
 
@@ -145,7 +144,7 @@ class SalesTerritoryEndpointResponse(BaseModel):
 
 class SalesTerritoryCompareCandidatesEndpointResponse(BaseModel):
     class SalesTerritoryCompareCandidatesRequest(BaseModel):
-        candidates: List[SalesTerritoryRequest]
+        candidates: list[SalesTerritoryRequest]
 
     request: SalesTerritoryCompareCandidatesRequest
     response: SalesTerritoryResponse
@@ -162,7 +161,7 @@ class SalesTerritoryCompareGeojsonEndpointResponse(BaseModel):
 
 class SalesTerritoryCompareGeometriesEndpointResponse(BaseModel):
     class SalesTerritoryCompareGeometriesRequest(BaseModel):
-        geometries: List[GeometryModel]
+        geometries: list[GeometryModel]
         city: str
 
     request: SalesTerritoryCompareGeometriesRequest

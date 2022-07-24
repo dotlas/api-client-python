@@ -1,7 +1,5 @@
 import requests
 
-from typing import List, Dict, Union
-
 from dotlas.schemas.cities import ReverseGeocodeEndpointResponse
 from dotlas.schemas.sociodemographics import (
     AreaResponse,
@@ -35,7 +33,7 @@ class App:
         self.__cities_url: str = f"{self.__base_url}/cities"
 
         self.__params = {"api_key": self.api_key}
-        self.__headers: Dict[str, str] = {
+        self.__headers: dict[str, str] = {
             "Accept": "application/json",
             "Content-Type": "application/json",
             "Authorization": self.api_key,
@@ -83,26 +81,26 @@ class App:
         ) as e:
             raise ValueError(f"Unable to fetch response: {e}")
 
-    def list_commercial_types(self) -> List[str]:
+    def list_commercial_types(self) -> list[str]:
         """List all available commercial types.
         A commercial type is a type of industry, such as retail, restaurants, gyms etc.
 
         Returns:
-            List[str]: A list of commercial types acceptable by the API.
+            list[str]: A list of commercial types acceptable by the API.
         """
         url = f"{self.__competition_url}/types"
         return self.__generic_fetch(url=url, params=self.__params)
 
-    def list_cities(self) -> List[str]:
+    def list_cities(self) -> list[str]:
         """List all cities supported by the API.
 
         Returns:
-            List[str]: A list of cities supported by the API.
+            list[str]: A list of cities supported by the API.
         """
         url = self.__cities_url
         return self.__generic_fetch(url=url, params=self.__params)
 
-    def list_places_in_city(self, city: str) -> List[str]:
+    def list_places_in_city(self, city: str) -> list[str]:
         """Takes in a city and returns the list of places (sub-areas) within a city.
         Ex: Burbank, Beverly Hills are example of `places` in the city / urban area of Los Angeles.
         These don't qualify as areas or neighborhoods.
@@ -111,12 +109,12 @@ class App:
             city (str): The city to list places in.
 
         Returns:
-            List[str]: A list of places in the city.
+            list[str]: A list of places in the city.
         """
         url: str = f"{self.__cities_url}/places/{city}"
         return self.__generic_fetch(url=url, params=self.__params)
 
-    def list_areas_in_city(self, city: str) -> List[str]:
+    def list_areas_in_city(self, city: str) -> list[str]:
         """Takes in a city and returns the list of areas (neighborhoods) within a city.
         Ex: Financial District, Upper West Side are example of `areas` in the city / urban area of New York.
 
@@ -124,12 +122,12 @@ class App:
             city (str): The city to list areas in.
 
         Returns:
-            List[str]: A list of areas in the city.
+            list[str]: A list of areas in the city.
         """
         url: str = f"{self.__cities_url}/areas/{city}"
         return self.__generic_fetch(url=url, params=self.__params)
 
-    def list_commercial_brands(self, city: str, commercial_type: str) -> List[str]:
+    def list_commercial_brands(self, city: str, commercial_type: str) -> list[str]:
         """Takes in a `city` and a `commercial_type` returns a set of all brands of `commercial_type` within the city.
         A brand is a chain / group of businesses that are part of the same industry. Ex: Pizza Hut / Starbucks
 
@@ -138,12 +136,12 @@ class App:
             commercial_type (str): The commercial type to list brands in.
 
         Returns:
-            List[str]: A list of distinct brands in the city.
+            list[str]: A list of distinct brands in the city.
         """
         url = f"{self.__competition_url}/brands/{city}/{commercial_type}"
         return self.__generic_fetch(url=url, params=self.__params)
 
-    def list_commercial_categories(self, city: str, commercial_type: str) -> List[str]:
+    def list_commercial_categories(self, city: str, commercial_type: str) -> list[str]:
         """Takes in a `city` and a `commercial_type` returns a set of all categories of `commercial_type`
         within the city ordered by most number of locations. A category is a class tag assigned to a location.
         Examples for Restaurants: Italian / American / Fast Food / Pizza / Chinese / Japanese / Thai / Indian
@@ -153,7 +151,7 @@ class App:
             commercial_type (str): The commercial type to list categories in.
 
         Returns:
-            List[str]: A list of distinct categories in the city.
+            list[str]: A list of distinct categories in the city.
         """
         url = f"{self.__competition_url}/categories/{city}/{commercial_type}"
         return self.__generic_fetch(url=url, params=self.__params)
@@ -170,8 +168,27 @@ class App:
             SocioDemographicsCityResponse: A SocioDemographicsCityResponse object containing the city stats.
         """
         url = f"{self.__sociodemographics_url}/stats/{city}"
+        city_stats_response = self.__generic_fetch(url=url, params=self.__params)
         return SocioDemographicsCityResponse(
-            self.__generic_fetch(url=url, params=self.__params)
+            average_individual_income=city_stats_response.get(
+                "average_individual_income"
+            ),
+            median_household_income=city_stats_response.get("median_household_income"),
+            population_total=city_stats_response.get("population_total"),
+            population_youth=city_stats_response.get("population_youth"),
+            population_middle_age=city_stats_response.get("population_middle_age"),
+            population_senior=city_stats_response.get("population_senior"),
+            work_transportation_self_mobility=city_stats_response.get(
+                "work_transportation_self_mobility"
+            ),
+            household_income_low=city_stats_response.get("household_income_low"),
+            household_income_medium=city_stats_response.get("household_income_medium"),
+            household_income_high=city_stats_response.get("household_income_high"),
+            households_total=city_stats_response.get("households_total"),
+            households_family_total=city_stats_response.get("households_family_total"),
+            average_household_composition=city_stats_response.get(
+                "average_household_composition"
+            ),
         )
 
     def area_stats(self, city: str, area: str) -> AreaResponse:
@@ -250,8 +267,7 @@ class App:
         if time_minutes:
             if not mode_of_mobility:
                 raise ValueError(
-                    "`Mode of Mobility` parameter must be provided for time-based \
-                    sales territory derivation"
+                    "`Mode of Mobility` parameter must be provided for time-based sales territory derivation"
                 )
             url = f"{self.__sociodemographics_url}/sales_territory/time"
             params["time_minutes"] = time_minutes
@@ -273,8 +289,8 @@ class App:
         city: str,
         commercial_type: str,
         radius_meters: int = 500,
-        brand_filters: List[str] = None,
-        category_filters: List[str] = None,
+        brand_filters: list[str] = None,
+        category_filters: list[str] = None,
     ) -> CompetitionEndpointResponse:
         """Takes in a coordinate point, the city where the point is located, the search radius and filters (brands and categories).
         Returns a set of statistics and data for all locations within the search radius that satisfy the `commercial_type`.
@@ -285,8 +301,8 @@ class App:
             city (str): The city where the coordinate point is located.
             commercial_type (str): The commercial type to search for.
             radius_meters (int): The circular radius distance (in meters) to take from the coordinates. Defaults to 500.
-            brand_filters (List[str], optional): Filter for locations of specific brands in the radius. Defaults to None.
-            category_filters (List[str], optional): Filter for locations with specific category tags in the radius. Defaults to None.
+            brand_filters (list[str], optional): Filter for locations of specific brands in the radius. Defaults to None.
+            category_filters (list[str], optional): Filter for locations with specific category tags in the radius. Defaults to None.
 
         Returns:
             CompetitionEndpointResponse: CompetitionEndpointResponse object containing the competition stats.
@@ -320,7 +336,7 @@ class App:
         self,
         city: str,
         commercial_type: str,
-        categories: List[str] = None,
+        categories: list[str] = None,
         price_range: int = None,
     ) -> CategoryInsightsEndpointResponse:
         """A function that returns a set of aggregated insights on the locations in a city at a categorical level.
@@ -330,7 +346,7 @@ class App:
         Args:
             city (str): The city to retrieve category insights for.
             commercial_type (str): The commercial type to search for.
-            categories (List[str], optional): Filter for locations with specific category tags in the radius. Defaults to None.
+            categories (list[str], optional): Filter for locations with specific category tags in the radius. Defaults to None.
             price_range (int, optional): Filter for locations with specific set of price ranges. Defaults to None.
 
         Returns:
@@ -363,7 +379,7 @@ class App:
         self,
         city: str,
         commercial_type: str,
-        categories: List[str] = None,
+        categories: list[str] = None,
         price_range: int = None,
     ) -> BrandInsightsEndpointResponse:
         """A function that returns a set of aggregated insights on the locations in a city at a brand level.
@@ -373,7 +389,7 @@ class App:
         Args:
             city (str): The city to retrieve category insights for.
             commercial_type (str): The commercial type to search for.
-            categories (List[str], optional): Filter for locations with specific category tags in the radius. Defaults to None.
+            categories (list[str], optional): Filter for locations with specific category tags in the radius. Defaults to None.
             price_range (int, optional): Filter for locations with specific set of price ranges. Defaults to None.
 
         Returns:
@@ -404,7 +420,7 @@ class App:
         self,
         city: str,
         commercial_type: str,
-        categories: List[str] = None,
+        categories: list[str] = None,
         price_range: int = None,
     ) -> AreaInsightsEndpointResponse:
         """A function that returns a set of aggregated insights on the locations in a city at an area level.
@@ -415,7 +431,7 @@ class App:
         Args:
             city (str): The city to retrieve category insights for.
             commercial_type (str): The commercial type to search for.
-            categories (List[str], optional): Filter for locations with specific category tags in the radius. Defaults to None.
+            categories (list[str], optional): Filter for locations with specific category tags in the radius. Defaults to None.
             price_range (int, optional): Filter for locations with specific set of price ranges. Defaults to None.
 
         Returns:
