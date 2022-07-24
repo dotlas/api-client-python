@@ -483,7 +483,11 @@ class App:
             GeojsonSpec: GeoJSON object containing the boundary of the city.
         """
         url: str = f"{self.__cities_url}/boundary/{city}"
-        return GeojsonSpec(self.__generic_fetch(url=url, params=self.__params))
+        boundary_response: dict = self.__generic_fetch(url=url, params=self.__params)
+        return GeojsonSpec(
+            type=boundary_response.get("type"),
+            features=boundary_response.get("features")
+        )
 
     def place_boundary(self, city: str, place: str) -> GeojsonSpec:
         """A function that returns the boundary of a place in GeoJSON format.
