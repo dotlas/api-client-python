@@ -18,7 +18,7 @@
 <div align="center">
  
 [![License](https://img.shields.io/badge/license-MIT-green)](https://img.shields.io/badge/license-MIT-green) 
-[![Python version](https://img.shields.io/badge/python-v3.8-blue)](https://img.shields.io/badge/python-v3.8-blue)
+[![Python version](https://img.shields.io/badge/python-v3.9-blue)](https://img.shields.io/badge/python-v3.9-blue)
 
 </div>
 
