@@ -486,7 +486,7 @@ class App:
         boundary_response: dict = self.__generic_fetch(url=url, params=self.__params)
         return GeojsonSpec(
             type=boundary_response.get("type"),
-            features=boundary_response.get("features")
+            features=boundary_response.get("features"),
         )
 
     def place_boundary(self, city: str, place: str) -> GeojsonSpec:
@@ -500,7 +500,11 @@ class App:
             GeojsonSpec: GeoJSON object containing the boundary of the place.
         """
         url: str = f"{self.__cities_url}/places/boundary/{city}/{place}"
-        return GeojsonSpec(self.__generic_fetch(url=url, params=self.__params))
+        boundary_response: dict = self.__generic_fetch(url=url, params=self.__params)
+        return GeojsonSpec(
+            type=boundary_response.get("type"),
+            features=boundary_response.get("features"),
+        )
 
     def area_boundary(self, city: str, area: str) -> GeojsonSpec:
         """A function that returns the boundary of an area in GeoJSON format.
@@ -513,4 +517,8 @@ class App:
             GeojsonSpec: _description_
         """
         url: str = f"{self.__cities_url}/areas/boundary/{city}/{area}"
-        return GeojsonSpec(self.__generic_fetch(url=url, params=self.__params))
+        boundary_response: dict = self.__generic_fetch(url=url, params=self.__params)
+        return GeojsonSpec(
+            type=boundary_response.get("type"),
+            features=boundary_response.get("features"),
+        )

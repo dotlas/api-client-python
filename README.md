@@ -19,6 +19,9 @@
  
 [![License](https://img.shields.io/badge/license-MIT-green)](https://img.shields.io/badge/license-MIT-green) 
 [![Python version](https://img.shields.io/badge/python-v3.9-blue)](https://img.shields.io/badge/python-v3.9-blue)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) 
+[![Maintainability](https://api.codeclimate.com/v1/badges/3d45c9c0951324c28210/maintainability)](https://codeclimate.com/github/dotlas/api-client-python/maintainability)
+![](https://img.shields.io/github/issues/dotlas/api-client-python.svg)
 
 </div>
 
