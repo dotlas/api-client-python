@@ -17,6 +17,7 @@
 
 <div align="center">
  
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ff3dbf0fdb3948ca888578326c79f6eb)](https://app.codacy.com/gh/dotlas/api-client-python?utm_source=github.com&utm_medium=referral&utm_content=dotlas/api-client-python&utm_campaign=Badge_Grade_Settings)
 [![License](https://img.shields.io/badge/license-MIT-green)](https://img.shields.io/badge/license-MIT-green) 
 [![Python version](https://img.shields.io/badge/python-v3.9-blue)](https://img.shields.io/badge/python-v3.9-blue)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) 
