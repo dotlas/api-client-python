@@ -21,7 +21,8 @@
 [![Python version](https://img.shields.io/badge/python-v3.9-blue)](https://img.shields.io/badge/python-v3.9-blue)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) 
 [![Maintainability](https://api.codeclimate.com/v1/badges/3d45c9c0951324c28210/maintainability)](https://codeclimate.com/github/dotlas/api-client-python/maintainability)
-![](https://img.shields.io/github/issues/dotlas/api-client-python.svg)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/ab96b812bd0b454182a9fe39b75b2292)](https://www.codacy.com/gh/dotlas/api-client-python/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dotlas/api-client-python&amp;utm_campaign=Badge_Grade)
+![Github Issues](https://img.shields.io/github/issues/dotlas/api-client-python.svg)
 
 </div>
 
