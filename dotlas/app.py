@@ -60,7 +60,7 @@ class App:
         """
         try:
             response = requests.request(
-                request_type, url, params=params, headers=self.__headers
+                request_type, url, params=params, headers=self.__headers, timeout=10
             )
 
             if response.status_code == 200:
@@ -78,8 +78,8 @@ class App:
             requests.exceptions.ConnectionError,
             requests.exceptions.HTTPError,
             requests.exceptions.RequestException,
-        ) as e:
-            raise ValueError(f"Unable to fetch response: {e}")
+        ) as exc:
+            raise ValueError(f"Unable to fetch response: {exc}") from exc
 
     def list_commercial_types(self) -> list[str]:
         """List all available commercial types.
@@ -461,6 +461,16 @@ class App:
     def reverse_geocode(
         self, latitude: float, longitude: float
     ) -> ReverseGeocodeEndpointResponse:
+        """A function that reverse geocodes a latitude and longitude in the US. 
+        The maximum depth of the geocode is neighborhood level.
+
+        Args:
+            latitude (float): The latitude of the coordinate point.
+            longitude (float): The longitude of the coordinate point.
+
+        Returns:
+            ReverseGeocodeEndpointResponse: ReverseGeocodeEndpointResponse object containing reverse geocode stats.
+        """
         ReverseGeocodeEndpointResponse.ReverseGeocodeRequest(
             latitude=latitude, longitude=longitude
         )
@@ -514,7 +524,7 @@ class App:
             area (str): The area in the city to retrieve the boundary for.
 
         Returns:
-            GeojsonSpec: _description_
+            GeojsonSpec: GeoJSON object containing the boundary of the area.
         """
         url: str = f"{self.__cities_url}/areas/boundary/{city}/{area}"
         boundary_response: dict = self.__generic_fetch(url=url, params=self.__params)
