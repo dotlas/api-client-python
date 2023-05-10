@@ -1,5 +1,5 @@
 from pydantic import BaseModel, validator
-
+from typing import List
 
 class PriceBins(BaseModel):
     price_1: int = None
@@ -9,13 +9,13 @@ class PriceBins(BaseModel):
 
 
 class OperatingHours(BaseModel):
-    sunday: list[int]
-    monday: list[int]
-    tuesday: list[int]
-    wednesday: list[int]
-    thursday: list[int]
-    friday: list[int]
-    saturday: list[int]
+    sunday: List[int]
+    monday: List[int]
+    tuesday: List[int]
+    wednesday: List[int]
+    thursday: List[int]
+    friday: List[int]
+    saturday: List[int]
 
 
 class CompetitionEndpointResponse(BaseModel):
@@ -25,8 +25,8 @@ class CompetitionEndpointResponse(BaseModel):
         city: str
         commercial_type: str
         radius_meters: int
-        brands: list[str] = None
-        categories: list[str] = None
+        brands: List[str] = None
+        categories: List[str] = None
 
         radius_meters_valid = (
             lambda radius_meters: True if 1 <= radius_meters <= 10000 else False
@@ -62,7 +62,7 @@ class CompetitionEndpointResponse(BaseModel):
             class TopOutlets(BaseModel):
                 brand_name: str
                 address: str
-                category_tags: list[str]
+                category_tags: List[str]
                 rating: float
                 number_of_reviews: int = None
                 rating_percentile: float
@@ -70,8 +70,8 @@ class CompetitionEndpointResponse(BaseModel):
                 latitude: float
                 longitude: float
 
-            top_occurring_categories: list[str] = None
-            top_nearby_outlets: list[TopOutlets] = None
+            top_occurring_categories: List[str] = None
+            top_nearby_outlets: List[TopOutlets] = None
             operating_hours_outlet_count: int
             operating_hours: OperatingHours
 
@@ -86,8 +86,8 @@ class CompetitionCityEndpointResponse(BaseModel):
     class CompetitionCityRequest(BaseModel):
         city: str
         commercial_type: str
-        brands: list[str] = None
-        categories: list[str] = None
+        brands: List[str] = None
+        categories: List[str] = None
 
     class CompetitionCityResponse(BaseModel):
         class CompetitionCity(BaseModel):
@@ -95,13 +95,13 @@ class CompetitionCityEndpointResponse(BaseModel):
             address: str
             latitude: float
             longitude: float
-            category_tags: list[str]
+            category_tags: List[str]
             rating: float = None
             number_of_reviews: int = None
             indices_price_range: float = None
             indices_order_proxy: float = None
 
-        competitors: list[CompetitionCity]
+        competitors: List[CompetitionCity]
 
     request: CompetitionCityRequest = None
     response: CompetitionCityResponse = None
@@ -114,7 +114,7 @@ class CompetitionDiscoveryRequest(BaseModel):
 
 class CompetitionDiscoveryBrandsEndpointResponse(BaseModel):
     class CompetitionDiscoveryBrandsResponse(BaseModel):
-        brands: list[str] = None
+        brands: List[str] = None
 
     request: CompetitionDiscoveryRequest = None
     response: CompetitionDiscoveryBrandsResponse = None
@@ -122,7 +122,7 @@ class CompetitionDiscoveryBrandsEndpointResponse(BaseModel):
 
 class CompetitionDiscoveryCategoriesEndpointResponse(BaseModel):
     class CompetitionDiscoveryCategoriesResponse(BaseModel):
-        categories: list[str] = None
+        categories: List[str] = None
 
     request: CompetitionDiscoveryRequest = None
     response: CompetitionDiscoveryCategoriesResponse = None
@@ -131,7 +131,7 @@ class CompetitionDiscoveryCategoriesEndpointResponse(BaseModel):
 class GenericInsightsRequests(BaseModel):
     city: str
     commercial_type: str
-    categories: list[str] = None
+    categories: List[str] = None
     price_range: int = None
 
     @validator("price_range")
@@ -162,8 +162,8 @@ class CategoryInsightsEndpointResponse(BaseModel):
             pair_occurrences: int
 
         min_avg_rating: str
-        category_stats: list[CategoryStat]
-        category_by_pairwise_occurrence: list[CategoryPairwiseOccurrence]
+        category_stats: List[CategoryStat]
+        category_by_pairwise_occurrence: List[CategoryPairwiseOccurrence]
 
     request: GenericInsightsRequests
     response: CategoryInsights
@@ -176,13 +176,13 @@ class BrandInsightsEndpointResponse(BaseModel):
             avg_rating: float
             avg_number_of_reviews: float
             outlet_count: int
-            category_tags: list[str]
+            category_tags: List[str]
             price_bins: PriceBins
 
         outlet_count: int
-        brand_stats_by_outlet_count: list[BrandStat]
-        brand_stats_by_avg_rating: list[BrandStat]
-        brand_stats_by_avg_number_of_reviews: list[BrandStat]
+        brand_stats_by_outlet_count: List[BrandStat]
+        brand_stats_by_avg_rating: List[BrandStat]
+        brand_stats_by_avg_number_of_reviews: List[BrandStat]
         outlet_counts_by_price: PriceBins
         operating_hours_outlet_count: int
         operating_hours: OperatingHours
@@ -211,9 +211,9 @@ class AreaInsightsEndpointResponse(BaseModel):
             avg_number_of_reviews: float
             brand_count: int
 
-        street_stats: list[StreetStat]
-        neighborhood_stats: list[NeighborhoodStat]
-        postcode_stats: list[PostcodeStat]
+        street_stats: List[StreetStat]
+        neighborhood_stats: List[NeighborhoodStat]
+        postcode_stats: List[PostcodeStat]
 
     request: GenericInsightsRequests
     response: AreaInsights
