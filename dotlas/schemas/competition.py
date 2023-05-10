@@ -1,6 +1,7 @@
 from pydantic import BaseModel, validator
 from typing import List
 
+
 class PriceBins(BaseModel):
     price_1: int = None
     price_2: int = None
