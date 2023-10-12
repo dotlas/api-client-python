@@ -1,0 +1,24 @@
+site_name: Dotlas api-client-python
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.emoji
+  - pymdownx.tasklist
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.details
+  - pymdownx.tilde
+  - pymdownx.progressbar
+  - pymdownx.magiclink
+  - pymdownx.tabbed
+  - pymdownx.extra
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+docs_dir: docs
+
+theme:
+  name: "material"
+
+nav:
+  - API Doc: index.md

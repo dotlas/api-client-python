@@ -1,3 +1,4 @@
+from typing import List
 from multiprocessing.sharedctypes import Value
 from pydantic import BaseModel, ValidationError, validator
 
@@ -36,7 +37,7 @@ class GeojsonSpec(BaseModel):
         geometry: GeometryModel
 
     type: str = "FeatureCollection"
-    features: list[GeometryFeature]
+    features: List[GeometryFeature]
 
 
 class GeneralStatisitcal(BaseModel):
@@ -129,7 +130,7 @@ class SalesTerritoryRequest(BaseModel):
 
 class SalesTerritoryResponse(BaseModel):
     sociodemographic: SocioDemographicResponse = None
-    areas_covered: list[str] = None
+    areas_covered: List[str] = None
     geometry: GeojsonSpec = None
 
 
@@ -144,7 +145,7 @@ class SalesTerritoryEndpointResponse(BaseModel):
 
 class SalesTerritoryCompareCandidatesEndpointResponse(BaseModel):
     class SalesTerritoryCompareCandidatesRequest(BaseModel):
-        candidates: list[SalesTerritoryRequest]
+        candidates: List[SalesTerritoryRequest]
 
     request: SalesTerritoryCompareCandidatesRequest
     response: SalesTerritoryResponse
@@ -161,7 +162,7 @@ class SalesTerritoryCompareGeojsonEndpointResponse(BaseModel):
 
 class SalesTerritoryCompareGeometriesEndpointResponse(BaseModel):
     class SalesTerritoryCompareGeometriesRequest(BaseModel):
-        geometries: list[GeometryModel]
+        geometries: List[GeometryModel]
         city: str
 
     request: SalesTerritoryCompareGeometriesRequest
